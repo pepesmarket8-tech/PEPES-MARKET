@@ -2,196 +2,425 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PepesMarket</title>
+  <link rel="icon" type="image/png" href="favicon.png">
   <style>
-    :root{--orange:#ff8a00;--green:#2fb95d;--dark:#222;--gray:#444;}
-    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f3f3f3}
-    header{position:sticky;top:0;z-index:100;background:#222;color:#fff;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap}
-    .brand{display:flex;align-items:center;gap:10px;}
-    .brand img{height:40px;width:40px;border-radius:8px}
-    nav a{color:#fff;margin-left:12px;text-decoration:none;font-weight:bold}
-    .searchbox{width:300px;position:relative;margin-top:6px}
-    .searchbox input{width:100%;padding:6px 12px 6px 28px;border-radius:20px;border:none}
-    .searchbox .lupa{position:absolute;left:8px;top:6px}
-    .suggestions{position:absolute;top:34px;left:0;width:100%;background:#fff;border-radius:6px;box-shadow:0 2px 6px rgba(0,0,0,0.2);display:none;z-index:200}
-    .suggestions div{padding:6px;cursor:pointer}
-    .suggestions div:hover{background:#eee}
-    .banner{height:140px;background:linear-gradient(90deg,var(--orange),var(--green));display:flex;align-items:center;padding:20px;color:#fff;box-shadow:0 4px 8px rgba(0,0,0,0.2)}
-    section{padding:30px 20px}
-    section h2{margin:0 0 20px;font-size:22px}
-    .productos{display:flex;flex-wrap:wrap;gap:20px;justify-content:center}
-    .producto{width:200px;background:var(--gray);border-radius:12px;padding:10px;text-align:center;color:#fff;box-shadow:0 4px 10px rgba(0,0,0,0.3)}
-    .producto img{width:100%;height:130px;object-fit:cover;border-radius:8px}
-    .producto h3{margin:8px 0 4px;font-size:16px}
-    .producto p{margin:0 0 6px}
-    .producto button{background:var(--orange);border:none;padding:6px 12px;border-radius:6px;color:#fff;cursor:pointer;font-weight:bold}
-    footer{background:var(--dark);color:#fff;padding:20px;text-align:center;margin-top:40px}
-    .carrito-total{position:fixed;right:14px;bottom:14px;background:var(--dark);color:#fff;padding:10px 14px;border-radius:10px;cursor:pointer;z-index:300}
-    .carrito-panel{position:fixed;right:14px;bottom:64px;width:300px;max-height:400px;overflow:auto;background:#fff;border-radius:10px;padding:12px;box-shadow:0 8px 20px rgba(0,0,0,0.4);display:none;z-index:300}
-    .carrito-item{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #eee}
-    .carrito-item button{background:#d9534f;border:none;color:#fff;padding:2px 6px;border-radius:4px;cursor:pointer}
+    :root {
+      --primary: #ff8a00;
+      --secondary: #2fb95d;
+      --dark: #222;
+      --light: #f4f4f4;
+      --card-bg: #fff;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--light);
+    }
+    header {
+      background: var(--dark);
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header .brand {
+      display: flex;
+      align-items: center;
+    }
+    header .brand img {
+      height: 40px;
+      margin-right: 10px;
+    }
+    nav {
+      display: flex;
+      gap: 15px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .promo-banner {
+      width: 100%;
+      height: 220px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+    }
+    .categories {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 20px 0;
+      gap: 15px;
+    }
+    .category-card {
+      background: var(--card-bg);
+      border-radius: 8px;
+      width: 140px;
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      padding: 10px;
+      cursor: pointer;
+    }
+    .category-card:hover {
+      box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+    }
+    .category-card span {
+      font-size: 16px;
+      color: var(--dark);
+    }
+    .products-section {
+      padding: 0 20px 40px 20px;
+    }
+    .products-section h2 {
+      margin: 20px 0 10px;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 20px;
+    }
+    .product-card {
+      background: var(--card-bg);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+    }
+    .product-card img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+    }
+    .product-info {
+      padding: 10px;
+      flex-grow: 1;
+    }
+    .product-info h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+    .product-info p {
+      margin: 0 0 10px;
+      color: var(--primary);
+      font-weight: bold;
+    }
+    .product-info button {
+      background: var(--primary);
+      border: none;
+      padding: 8px;
+      color: white;
+      width: 100%;
+      cursor: pointer;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+    }
+    footer {
+      background: var(--dark);
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+    }
+    /* Carrito y buscador pueden agregarse como antes */
   </style>
 </head>
 <body>
+  <header>
+    <div class="brand">
+      <img src="favicon.png" alt="Logo">
+      <span>PepesMarket</span>
+    </div>
+    <nav>
+      <a href="#bebidas">Bebidas</a>
+      <a href="#licores">Licores</a>
+      <a href="#helados">Helados</a>
+      <a href="#golosinas">Golosinas</a>
+      <a href="#mascotas">Mascotas</a>
+    </nav>
+  </header>
 
-<header>
-  <div class="brand">
-    <img src="https://i.imgur.com/1c8fQZb.png" alt="logo">
-    <div><strong>PepesMarket</strong><br><small>Pachalum</small></div>
+  <div class="promo-banner">¡Bienvenido a PepesMarket! Calidad y precio cerca de ti</div>
+
+  <div class="categories">
+    <div class="category-card" onclick="scrollToSection('bebidas')">
+      <span>🥤 Bebidas</span>
+    </div>
+    <div class="category-card" onclick="scrollToSection('licores')">
+      <span>🍷 Licores</span>
+    </div>
+    <div class="category-card" onclick="scrollToSection('helados')">
+      <span>🍦 Helados</span>
+    </div>
+    <div class="category-card" onclick="scrollToSection('golosinas')">
+      <span>🍬 Golosinas</span>
+    </div>
+    <div class="category-card" onclick="scrollToSection('mascotas')">
+      <span>🐶 Mascotas</span>
+    </div>
   </div>
-  <div class="searchbox">
-    <span class="lupa">🔍</span>
-    <input id="search" placeholder="Buscar producto...">
-    <div id="suggest" class="suggestions"></div>
+
+  <div class="products-section" id="bebidas">
+    <h2>🥤 Bebidas</h2>
+    <div class="product-grid">
+      <div class="product-card">
+        <img src="https://i.imgur.com/gb5mY0Q.jpg" alt="Coca Cola 600ml">
+        <div class="product-info">
+          <h3>Coca Cola 600ml</h3>
+          <p>Q8.00</p>
+          <button onclick="agregarAlCarrito('Coca Cola 600ml',8)">Agregar</button>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="https://i.imgur.com/nXjz8WZ.jpg" alt="Gallo Botella">
+        <div class="product-info">
+          <h3>Cerveza Gallo Botella</h3>
+          <p>Q10.00</p>
+          <button onclick="agregarAlCarrito('Gallo Botella',10)">Agregar</button>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="https://i.imgur.com/fT1eONd.jpg" alt="Gallo Lata 12oz">
+        <div class="product-info">
+          <h3>Cerveza Gallo Lata 12oz</h3>
+          <p>Q10.00</p>
+          <button onclick="agregarAlCarrito('Gallo Lata 12oz',10)">Agregar</button>
+        </div>
+      </div>
+    </div>
   </div>
-  <nav>
-    <a href="#bebidas">🥤 Bebidas</a>
-    <a href="#licores">🍷 Licores</a>
-    <a href="#helados">🍦 Helados</a>
-    <a href="#golosinas">🍬 Golosinas</a>
-    <a href="#bimbo">🍞 Bimbo</a>
-    <a href="#cocina">🍳 Cocina</a>
-    <a href="#sopas">🥣 Sopas</a>
-    <a href="#limpieza">🧹 Limpieza</a>
-    <a href="#cuidado">🧴 Cuidado</a>
-    <a href="#medicina">💊 Medicina</a>
-    <a href="#bebes">🍼 Bebés</a>
-    <a href="#embutidos">🥓 Embutidos</a>
-    <a href="#mascotas">🐶 Mascotas</a>
-  </nav>
-</header>
 
-<div class="banner"><h1>Bienvenido a PepesMarket 🛒</h1></div>
+  <!-- Puedes copiar este bloque y cambiar `id`, emoji, productos para cada categoría -->
+  <div class="products-section" id="licores">
+    <h2>🍷 Licores</h2>
+    <div class="product-grid">
+      <div class="product-card">
+        <img src="https://i.imgur.com/YqO7B97.jpg" alt="Ron Botran 8">
+        <div class="product-info">
+          <h3>Ron Botran 8</h3><p>Q90.00</p>
+          <button onclick="agregarAlCarrito('Ron Botran 8',90)">Agregar</button>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="https://i.imgur.com/TuVcIrh.jpg" alt="Whisky Johnnie Walker">
+        <div class="product-info">
+          <h3>Whisky Johnnie Walker</h3><p>Q180.00</p>
+          <button onclick="agregarAlCarrito('Johnnie Walker',180)">Agregar</button>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="https://i.imgur.com/EJ2qVsD.jpg" alt="Tequila Jose Cuervo">
+        <div class="product-info">
+          <h3>Tequila Jose Cuervo</h3><p>Q120.00</p>
+          <button onclick="agregarAlCarrito('Jose Cuervo',120)">Agregar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<!-- ====== CATEGORÍAS ====== -->
-<section id="bebidas"><h2>🥤 Bebidas</h2><div class="productos">
-  <div class="producto"><img src="https://i.imgur.com/gb5mY0Q.jpg"><h3>Coca Cola 600ml</h3><p>Q8.00</p><button onclick="agregarAlCarrito('Coca Cola 600ml',8)">Agregar</button></div>
-  <div class="producto"><img src="https://i.imgur.com/nXjz8WZ.jpg"><h3>Cerveza Gallo Botella</h3><p>Q10.00</p><button onclick="agregarAlCarrito('Gallo Botella',10)">Agregar</button></div>
-  <div class="producto"><img src="https://i.imgur.com/fT1eONd.jpg"><h3>Cerveza Gallo Lata 12oz</h3><p>Q10.00</p><button onclick="agregarAlCarrito('Gallo Lata 12oz',10)">Agregar</button></div>
-</div></section>
+  <div class="products-section" id="helados">
+    <h2>🍦 Helados</h2>
+    <div class="product-grid">
+      <div class="product-card">
+        <img src="https://i.imgur.com/nHbcTj7.jpg" alt="Magnum Almendras">
+        <div class="product-info"><h3>Magnum Almendras</h3><p>Q15.00</p><button onclick="agregarAlCarrito('Magnum Almendras',15)">Agregar</button></div>
+      </div>
+      <div class="product-card">
+        <img src="https://i.imgur.com/CMtQhJH.jpg" alt="Cornetto Fresa">
+        <div class="product-info"><h3>Cornetto Fresa</h3><p>Q12.00</p><button onclick="agregarAlCarrito('Cornetto Fresa',12)">Agregar</button></div>
+      </div>
+      <div class="product-card">
+        <img src="https://i.imgur.com/9qYXskw.jpg" alt="Helado Sarita">
+        <div class="product-info"><h3>Helado Sarita Vainilla</h3><p>Q10.00</p><button onclick="agregarAlCarrito('Helado Sarita',10)">Agregar</button></div>
+      </div>
+    </div>
+  </div>
 
-<section id="licores"><h2>🍷 Licores</h2><div class="productos">
-  <div class="producto"><img src="https://i.imgur.com/YqO7B97.jpg"><h3>Ron Botran 8</h3><p>Q90.00</p><button onclick="agregarAlCarrito('Ron Botran 8',90)">Agregar</button></div>
-  <div class="producto"><img src="https://i.imgur.com/TuVcIrh.jpg"><h3>Whisky Johnnie Walker</h3><p>Q180.00</p><button onclick="agregarAlCarrito('Johnnie Walker',180)">Agregar</button></div>
-  <div class="producto"><img src="https://i.imgur.com/EJ2qVsD.jpg"><h3>Tequila Jose Cuervo</h3><p>Q120.00</p><button onclick="agregarAlCarrito('Jose Cuervo',120)">Agregar</button></div>
-</div></section>
+  <div class="products-section" id="golosinas">
+    <h2>🍬 Golosinas</h2>
+    <div class="product-grid">
+      <div class="product-card">
+        <img src="https://i.imgur.com/DsOjQ0U.jpg" alt="Tortrix Limón">
+        <div class="product-info"><h3>Tortrix Limón</h3><p>Q3.00</p><button onclick="agregarAlCarrito('Tortrix Limón',3)">Agregar</button></div>
+      </div>
+      <div class="product-card">
+        <img src="https://i.imgur.com/95sXbwA.jpg" alt="Chicle Motita">
+        <div class="product-info"><h3>Chicle Motita</h3><p>Q1.00</p><button onclick="agregarAlCarrito('Chicle Motita',1)">Agregar</button></div>
+      </div>
+      <div class="product-card">
+        <img src="https://i.imgur.com/H0dfL4A.jpg" alt="Chocolate Nestlé">
+        <div class="product-info"><h3>Chocolate Nestlé</h3><p>Q5.00</p><button onclick="agregarAlCarrito('Chocolate Nestlé',5)">Agregar</button></div>
+      </div>
+    </div>
+  </div>
 
-<section id="helados"><h2>🍦 Helados</h2><div class="productos">
-  <div class="producto"><img src="https://i.imgur.com/nHbcTj7.jpg"><h3>Magnum Almendras</h3><p>Q15.00</p><button onclick="agregarAlCarrito('Magnum Almendras',15)">Agregar</button></div>
-  <div class="producto"><img src="https://i.imgur.com/CMtQhJH.jpg"><h3>Cornetto Fresa</h3><p>Q12.00</p><button onclick="agregarAlCarrito('Cornetto Fresa',12)">Agregar</button></div>
-  <div class="producto"><img src="https://i.imgur.com/9qYXskw.jpg"><h3>Helado Sarita Vainilla</h3><p>Q10.00</p><button onclick="agregarAlCarrito('Helado Sarita',10)">Agregar</button></div>
-</div></section>
+  <div class="products-section" id="bimbo">
+    <h2>🍞 Bimbo</h2>
+    <div class="product-grid">
+      <div class="product-card"><img src="https://i.imgur.com/0UuR7KP.jpg"><div class="product-info"><h3>Pan Bimbo Blanco</h3><p>Q18.00</p><button onclick="agregarAlCarrito('Pan Bimbo Blanco',18)">Agregar</button></div></div>
+      <div class="product-card"><img src="https://i.imgur.com/GR6TYgM.jpg"><div class="product-info"><h3>Pan Integral Bimbo</h3><p>Q20.00</p><button onclick="agregarAlCarrito('Pan Integral Bimbo',20)">Agregar</button></div></div>
+      <div class="product-card"><img src="https://i.imgur.com/mGuUQpQ.jpg"><div class="product-info"><h3>Tortillas Bimbo</h3><p>Q22.00</p><button onclick="agregarAlCarrito('Tortillas Bimbo',22)">Agregar</button></div></div>
+    </div>
+  </div>
 
-<section id="golosinas"><h2>🍬 Golosinas</h2><div class="productos">
-  <div class="producto"><img src="https://i.imgur.com/DsOjQ0U.jpg"><h3>Tortrix Limón</h3><p>Q3.00</p><button onclick="agregarAlCarrito('Tortrix Limón',3)">Agregar</button></div>
-  <div class="producto"><img src="https://i.imgur.com/95sXbwA.jpg"><h3>Chicle Motita</h3><p>Q1.00</p><button onclick="agregarAlCarrito('Chicle Motita',1)">Agregar</button></div>
-  <div class="producto"><img src="https://i.imgur.com/H0dfL4A.jpg"><h3>Chocolate Nestlé</h3><p>Q5.00</p><button onclick="agregarAlCarrito('Chocolate Nestlé',5)">Agregar</button></div>
-</div></section>
+  <div class="products-section" id="cocina">
+    <h2>🍳 Cocina</h2>
+    <div class="product-grid">
+      <div class="product-card"><img src="https://i.imgur.com/qmsvO7M.jpg"><div class="product-info"><h3>Arroz Gallo Dorado 1Kg</h3><p>Q10.00</p><button onclick="agregarAlCarrito('Arroz Gallo Dorado 1Kg',10)">Agregar</button></div></div>
+      <div class="product-card"><img src="https://i.imgur.com/TZKH4nW.jpg"><div class="product-info"><h3>Frijol Negro</h3><p>Q8.00</p><button onclick="agregarAlCarrito('Frijol Negro',8)">Agregar</button></div></div>
+      <div class="product-card"><img src="https://i.imgur.com/ZrWbHDV.jpg"><div class="product-info"><h3>Aceite Capullo</h3><p>Q25.00</p><button onclick="agregarAlCarrito('Aceite Capullo',25)">Agregar</button></div></div>
+    </div>
+  </div>
 
-<section id="bimbo"><h2>🍞 Bimbo</h2><div class="productos">
-  <div class="producto"><img src="https://i.imgur.com/0UuR7KP.jpg"><h3>Pan Bimbo Blanco</h3><p>Q18.00</p><button onclick="agregarAlCarrito('Pan Bimbo Blanco',18)">Agregar</button></div>
-  <div class="producto"><img src="https://i.imgur.com/GR6TYgM.jpg"><h3>Pan Integral Bimbo</h3><p>Q20.00</p><button onclick="agregarAlCarrito('Pan Integral Bimbo',20)">Agregar</button></div>
-  <div class="producto"><img src="https://i.imgur.com/mGuUQpQ.jpg"><h3>Tortillas Bimbo</h3><p>Q22.00</p><button onclick="agregarAlCarrito('Tortillas Bimbo',22)">Agregar</button></div>
-</div></section>
+  <!-- MÁS CATEGORÍAS: SOPAS, LIMPIEZA, CUIDADO, MEDICINA, BEBÉS, EMBUTIDOS, MASCOTAS -->
+  <div class="products-section" id="sopas">
+    <h2>🥣 Sopas</h2>
+    <div class="product-grid">
+      <div class="product-card"><img src="https://i.imgur.com/XO9T5oG.jpg"><div class="product-info"><h3>Sopa Maggi Pollo</h3><p>Q5.00</p><button onclick="agregarAlCarrito('Sopa Maggi Pollo',5)">Agregar</button></div></div>
+      <div class="product-card"><img src="https://i.imgur.com/YuUl6b3.jpg"><div class="product-info"><h3>Sopa Maruchan</h3><p>Q6.00</p><button onclick="agregarAlCarrito('Sopa Maruchan',6)">Agregar</button></div></div>
+      <div class="product-card"><img src="https://i.imgur.com/bHRaMGF.jpg"><div class="product-info"><h3>Sopa Knorr Res</h3><p>Q7.00</p><button onclick="agregarAlCarrito('Sopa Knorr Res',7)">Agregar</button></div></div>
+    </div>
+  </div>
 
-<section id="cocina"><h2>🍳 Cocina</h2><div class="productos">
-  <div class="producto"><img src="https://i.imgur.com/qmsvO7M.jpg"><h3>Arroz Gallo Dorado 1Kg</h3><p>Q10.00</p><button onclick="agregarAlCarrito('Arroz Gallo Dorado',10)">Agregar</button></div>
-  <div class="producto"><img src="https://i.imgur.com/TZKH4nW.jpg"><h3>Frijol Negro</h3><p>Q8.00</p><button onclick="agregarAlCarrito('Frijol Negro',8)">Agregar</button></div>
-  <div class="producto"><img src="https://i.imgur.com/ZrWbHDV.jpg"><h3>Aceite Capullo</h3><p>Q25.00</p><button onclick="agregarAlCarrito('Aceite Capullo',25)">Agregar</button></div>
-</div></section>
+  <div class="products-section" id="limpieza">
+    <h2>🧹 Limpieza</h2>
+    <div class="product-grid">
+      <div class="product-card"><img src="https://i.imgur.com/tHNo3jW.jpg"><div class="product-info"><h3>Magia Blanca 1L</h3><p>Q15.00</p><button onclick="agregarAlCarrito('Magia Blanca 1L',15)">Agregar</button></div></div>
+      <div in class="product-grid"><div class="product-card"><img src="https://i.imgur.com/5D8tKef.jpg"><div class="product-info"><h3>Suavitel Azul</h3><p>Q18.00</p><button onclick="agregarAlCarrito('Suavitel Azul',18)">Agregar</button></div></div></div>
+      <div class="product-card"><img src="https://i.imgur.com/7Sa2i8j.jpg"><div class="product-info"><h3>Fabuloso Lavanda</h3><p>Q16.00</p><button onclick="agregarAlCarrito('Fabuloso Lavanda',16)">Agregar</button></div></div>
+    </div>
+  </div>
 
-<section id="sopas"><h2>🥣 Sopas</h2><div class="productos">
-  <div class="producto"><img src="https://i.imgur.com/XO9T5oG.jpg"><h3>Sopa Maggi Pollo</h3><p>Q5.00</p><button onclick="agregarAlCarrito('Sopa Maggi Pollo',5)">Agregar</button></div>
-  <div class="producto"><img src="https://i.imgur.com/YuUl6b3.jpg"><h3>Sopa Ramen Maruchan</h3><p>Q6.00</p><button onclick="agregarAlCarrito('Sopa Maruchan',6)">Agregar</button></div>
-  <div class="producto"><img src="https://i.imgur.com/bHRaMGF.jpg"><h3>Sopa Knorr Res</h3><p>Q7.00</p><button onclick="agregarAlCarrito('Sopa Knorr Res',7)">Agregar</button></div>
-</div></section>
+  <div class="products-section" id="cuidado">
+    <h2>🧴 Cuidado Personal</h2>
+    <div class="product-grid">
+      <div class="product-card"><img src="https://i.imgur.com/G1GguXq.jpg"><div class="product-info"><h3>Shampoo Sedal</h3><p>Q22.00</p><button onclick="agregarAlCarrito('Shampoo Sedal',22)">Agregar</button></div></div>
+      <div class="product-card"><img src="https://i.imgur.com/cPYrGkE.jpg"><div class="product-info"><h3>Jabón Dove</h3><p>Q10.00</p><button onclick="agregarAlCarrito('Jabón Dove',10)">Agregar</button></div></div>
+      <div class="product-card"><img src="https://i.imgur.com/bPSoNw3.jpg"><div class="product-info"><h3>Pasta Colgate</h3><p>Q15.00</p><button onclick="agregarAlCarrito('Pasta Colgate',15)">Agregar</button></div></div>
+    </div>
+  </div>
 
-<section id="limpieza"><h2>🧹 Limpieza</h2><div class="productos">
-  <div class="producto"><img src="https://i.imgur.com/tHNo3jW.jpg"><h3>Magia Blanca 1L</h3><p>Q15.00</p><button onclick="agregarAlCarrito('Magia Blanca 1L',15)">Agregar</button></div>
-  <div class="producto"><img src="https://i.imgur.com/5D8tKef.jpg"><h3>Suavitel Azul</h3><p>Q18.00</p><button onclick="agregarAlCarrito('Suavitel Azul',18)">Agregar</button></div>
-  <div class="producto"><img src="https://i.imgur.com/7Sa2i8j.jpg"><h3>Fabuloso Lavanda</h3><p>Q16.00</p><button onclick="agregarAlCarrito('Fabuloso Lavanda',16)">Agregar</button></div>
-</div></section>
+  <div class="products-section" id="medicina">
+    <h2>💊 Medicina</h2>
+    <div class="product-grid">
+      <div class="product-card"><img src="https://i.imgur.com/B7y9D4u.jpg"><div class="product-info"><h3>Panadol Extra</h3><p>Q5.00</p><button onclick="agregarAlCarrito('Panadol Extra',5)">Agregar</button></div></div>
+      <div class="product-card"><img src="https://i.imgur.com/Up0M6ik.jpg"><div class="product-info"><h3>Aspirina Bayer</h3><p>Q7.00</p><button onclick="agregarAlCarrito('Aspirina Bayer',7)">Agregar</button></div></div>
+      <div class="product-card"><img src="https://i.imgur.com/2ufZntb.jpg"><div class="product-info"><h3>Vitamina C</h3><p>Q10.00</p><button onclick="agregarAlCarrito('Vitamina C',10)">Agregar</button></div></div>
+    </div>
+  </div>
 
-<section id="cuidado"><h2>🧴 Cuidado Personal</h2><div class="productos">
-  <div class="producto"><img src="https://i.imgur.com/G1GguXq.jpg"><h3>Shampoo Sedal</h3><p>Q22.00</p><button onclick="agregarAlCarrito('Shampoo Sedal',22)">Agregar</button></div>
-  <div class="producto"><img src="https://i.imgur.com/cPYrGkE.jpg"><h3>Jabón Dove</h3><p>Q10.00</p><button onclick="agregarAlCarrito('Jabón Dove',10)">Agregar</button></div>
-  <div class="producto"><img src="https://i.imgur.com/bPSoNw3.jpg"><h3>Pasta Colgate</h3><p>Q15.00</p><button onclick="agregarAlCarrito('Pasta Colgate',15)">Agregar</button></div>
-</div></section>
+  <div class="products-section" id="bebes">
+    <h2>🍼 Bebés</h2>
+    <div class="product-grid">
+      <div class="product-card"><img src="https://i.imgur.com/5U6cEsw.jpg"><div class="product-info"><h3>Leche NAN 1</h3><p>Q95.00</p><button onclick="agregarAlCarrito('Leche NAN 1',95)">Agregar</button></div></div>
+      <div class="product-card"><img src="https://i.imgur.com/fT7EVFr.jpg"><div class="product-info"><h3>Pañales Pampers</h3><p>Q75.00</p><button onclick="agregarAlCarrito('Pañales Pampers',75)">Agregar</button></div></div>
+      <div class="product-card"><img src="https://i.imgur.com/FuEDcnf.jpg"><div class="product-info"><h3>Toallitas Huggies</h3><p>Q30.00</p><button onclick="agregarAlCarrito('Toallitas Huggies',30)">Agregar</button></div></div>
+    </div>
+  </div>
 
-<section id="medicina"><h2>💊 Medicina</h2><div class="productos">
-  <div class="producto"><img src="https://i.imgur.com/B7y9D4u.jpg"><h3>Panadol Extra</h3><p>Q5.00</p><button onclick="agregarAlCarrito('Panadol Extra',5)">Agregar</button></div>
-  <div class="producto"><img src="https://i.imgur.com/Up0M6ik.jpg"><h3>Aspirina Bayer</h3><p>Q7.00</p><button onclick="agregarAlCarrito('Aspirina Bayer',7)">Agregar</button></div>
-  <div class="producto"><img src="https://i.imgur.com/2ufZntb.jpg"><h3>Vitamina C</h3><p>Q10.00</p><button onclick="agregarAlCarrito('Vitamina C',10)">Agregar</button></div>
-</div></section>
+  <div class="products-section" id="embutidos">
+    <h2>🥓 Embutidos</h2>
+    <div class="product-grid">
+      <div class="product-card"><img src="https://i.imgur.com/9gHItwP.jpg"><div class="product-info"><h3>Jamón Toledo</h3><p>Q25.00</p><button onclick="agregarAlCarrito('Jamón Toledo',25)">Agregar</button></div></div>
+      <div class="product-card"><img src="https://i.imgur.com/yJGu86o.jpg"><div class="product-info"><h3>Salchichas</h3><p>Q20.00</p><button onclick="agregarAlCarrito('Salchichas',20)">Agregar</button></div></div>
+      <div class="product-card"><img src="https://i.imgur.com/QvdXPKD.jpg"><div class="product-info"><h3>Chorizo Especial</h3><p>Q28.00</p><button onclick="agregarAlCarrito('Chorizo Especial',28)">Agregar</button></div></div>
+    </div>
+  </div>
 
-<section id="bebes"><h2>🍼 Bebés</h2><div class="productos">
-  <div class="producto"><img src="https://i.imgur.com/5U6cEsw.jpg"><h3>Leche NAN 1</h3><p>Q95.00</p><button onclick="agregarAlCarrito('Leche NAN 1',95)">Agregar</button></div>
-  <div class="producto"><img src="https://i.imgur.com/fT7EVFr.jpg"><h3>Pañales Pampers</h3><p>Q75.00</p><button onclick="agregarAlCarrito('Pañales Pampers',75)">Agregar</button></div>
-  <div class="producto"><img src="https://i.imgur.com/FuEDcnf.jpg"><h3>Toallitas Húmedas Huggies</h3><p>Q30.00</p><button onclick="agregarAlCarrito('Toallitas Huggies',30)">Agregar</button></div>
-</div></section>
+  <div class="products-section" id="mascotas">
+    <h2>🐶 Mascotas</h2>
+    <div class="product-grid">
+      <div class="product-card"><img src="https://i.imgur.com/20c5bR8.jpg"><div class="product-info"><h3>Dogui 1Kg</h3><p>Q22.00</p><button onclick="agregarAlCarrito('Dogui 1Kg',22)">Agregar</button></div></div>
+      <div class="product-card"><img src="https://i.imgur.com/j5WQyQK.jpg"><div class="product-info"><h3>Galletas Pedigree</h3><p>Q15.00</p><button onclick="agregarAlCarrito('Pedigree Galletas',15)">Agregar</button></div></div>
+      <div class="product-card"><img src="https://i.imgur.com/gbiTqTg.jpg"><div class="product-info"><h3>Whiskas 500g</h3><p>Q18.00</p><button onclick="agregarAlCarrito('Whiskas 500g',18)">Agregar</button></div></div>
+    </div>
+  </div>
 
-<section id="embutidos"><h2>🥓 Embutidos</h2><div class="productos">
-  <div class="producto"><img src="https://i.imgur.com/9gHItwP.jpg"><h3>Jamón Toledo</h3><p>Q25.00</p><button onclick="agregarAlCarrito('Jamón Toledo',25)">Agregar</button></div>
-  <div class="producto"><img src="https://i.imgur.com/yJGu86o.jpg"><h3>Salchichas Deliciosas</h3><p>Q20.00</p><button onclick="agregarAlCarrito('Salchichas',20)">Agregar</button></div>
-  <div class="producto"><img src="https://i.imgur.com/QvdXPKD.jpg"><h3>Chorizo Especial</h3><p>Q28.00</p><button onclick="agregarAlCarrito('Chorizo Especial',28)">Agregar</button></div>
-</div></section>
+  <footer>
+    <p><strong>📍 Dirección:</strong> Aldea Pachalum, Rabinal, Baja Verapaz</p>
+    <p><strong>📞 Contacto:</strong> <a href="tel:+50246767886" style="color:#25d366">+502 4676-7886</a> | <a href="https://wa.me/50246767886" style="color:#25d366">WhatsApp</a></p>
+    <p>© 2025 PepesMarket</p>
+  </footer>
 
-<section id="mascotas"><h2>🐶 Mascotas</h2><div class="productos">
-  <div class="producto"><img src="https://i.imgur.com/20c5bR8.jpg"><h3>Dogui 1Kg</h3><p>Q22.00</p><button onclick="agregarAlCarrito('Dogui 1Kg',22)">Agregar</button></div>
-  <div class="producto"><img src="https://i.imgur.com/j5WQyQK.jpg"><h3>Galletas Pedigree</h3><p>Q15.00</p><button onclick="agregarAlCarrito('Pedigree Galletas',15)">Agregar</button></div>
-  <div class="producto"><img src="https://i.imgur.com/gbiTqTg.jpg"><h3>Whiskas 500g</h3><p>Q18.00</p><button onclick="agregarAlCarrito('Whiskas 500g',18)">Agregar</button></div>
-</div></section>
-
-<footer>
-  <p><strong>📍 Dirección:</strong> Aldea Pachalum, Rabinal, Baja Verapaz</p>
-  <p><strong>📞 Contacto:</strong> <a href="tel:+50246767886" style="color:#25d366">+502 4676-7886</a> | <a href="https://wa.me/50246767886" style="color:#25d366">WhatsApp</a></p>
-  <p>© 2025 PepesMarket</p>
-</footer>
-
-<div class="carrito-total" onclick="toggleCarrito()">🛒 Total: <span id="total">Q0.00</span></div>
-<div id="carritoPanel" class="carrito-panel">
-  <h3>🛍️ Carrito</h3>
-  <div id="itemsCarrito"></div>
-  <p><strong>Total: <span id="totalPanel">Q0.00</span></strong></p>
-  <button onclick="vaciarCarrito()">Vaciar carrito</button>
-</div>
+  <div class="carrito-total" onclick="toggleCarrito()">🛒 Total: <span id="total">Q0.00</span></div>
+  <div id="carritoPanel" class="carrito-panel">
+    <h3>🛍️ Carrito</h3>
+    <div id="itemsCarrito"></div>
+    <p><strong>Total: <span id="totalPanel">Q0.00</span></strong></p>
+    <button onclick="vaciarCarrito()">Vaciar carrito</button>
+  </div>
 
 <script>
-const search=document.getElementById('search');const suggest=document.getElementById('suggest');
-const products=document.querySelectorAll('.producto h3');
+const search = document.getElementById('search');
+const suggest = document.getElementById('suggest');
+const allProducts = Array.from(document.querySelectorAll('.producto h3')).map(h => h.textContent);
 search.addEventListener('input',()=>{
-  const q=search.value.trim().toLowerCase();
-  if(!q){suggest.style.display='none';suggest.innerHTML='';return;}
-  suggest.innerHTML='';
-  products.forEach(h=>{
-    if(h.textContent.toLowerCase().includes(q)){
-      const d=document.createElement('div');
-      d.textContent=h.textContent;
-      d.onclick=()=>{h.scrollIntoView({behavior:'smooth'});suggest.style.display='none';};
-      suggest.appendChild(d);
+  const q = search.value.trim().toLowerCase();
+  suggest.innerHTML = '';
+  if(!q) { suggest.style.display = 'none'; return; }
+  let matchCount = 0;
+  allProducts.forEach(name => {
+    if(name.toLowerCase().includes(q)) {
+      const div = document.createElement('div');
+      div.textContent = name;
+      div.onclick = ()=> {
+        document.querySelectorAll('.producto h3').forEach(h=>{
+          if(h.textContent === name) {
+            h.scrollIntoView({behavior:'smooth'});
+          }
+        });
+        suggest.style.display = 'none';
+      };
+      suggest.appendChild(div);
+      matchCount++;
     }
   });
-  suggest.style.display=suggest.innerHTML?'block':'none';
+  suggest.style.display = matchCount > 0 ? 'block' : 'none';
 });
-let carrito=[];let total=0;
-function agregarAlCarrito(nombre,precio){carrito.push({nombre,precio});total+=precio;actualizar();}
-function eliminarItem(i){total-=carrito[i].precio;carrito.splice(i,1);actualizar();}
-function vaciarCarrito(){carrito=[];total=0;actualizar();}
-function actualizar(){
-  document.getElementById('total').textContent='Q'+total.toFixed(2);
-  document.getElementById('totalPanel').textContent='Q'+total.toFixed(2);
-  const cont=document.getElementById('itemsCarrito');cont.innerHTML='';
-  carrito.forEach((it,i)=>{
-    const d=document.createElement('div');d.className='carrito-item';
-    d.innerHTML=`${it.nombre} - Q${it.precio.toFixed(2)} <button onclick="eliminarItem(${i})">❌</button>`;
+let carrito = [], total = 0;
+function agregarAlCarrito(nombre, precio) {
+  carrito.push({nombre, precio});
+  total += precio;
+  actualizarCarrito();
+}
+function eliminarItem(i) {
+  total -= carrito[i].precio;
+  carrito.splice(i,1);
+  actualizarCarrito();
+}
+function vaciarCarrito() {
+  carrito = []; total = 0;
+  actualizarCarrito();
+}
+function actualizarCarrito() {
+  document.getElementById('total').textContent = 'Q' + total.toFixed(2);
+  document.getElementById('totalPanel').textContent = 'Q' + total.toFixed(2);
+  const cont = document.getElementById('itemsCarrito');
+  cont.innerHTML = '';
+  carrito.forEach((it,i) => {
+    const d = document.createElement('div');
+    d.className = 'carrito-item';
+    d.innerHTML = `${it.nombre} - Q${it.precio.toFixed(2)} <button onclick="eliminarItem(${i})">❌</button>`;
     cont.appendChild(d);
   });
 }
-function toggleCarrito(){
-  const p=document.getElementById('carritoPanel');
-  p.style.display=(p.style.display==='block')?'none':'block';
+function toggleCarrito() {
+  const p = document.getElementById('carritoPanel');
+  p.style.display = (p.style.display === 'block') ? 'none' : 'block';
 }
 </script>
+
 </body>
 </html>
