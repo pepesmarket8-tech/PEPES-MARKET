@@ -21,24 +21,41 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
     }
     header img {
       height: 50px;
     }
+    header nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
     header nav a {
       color: white;
-      margin: 0 10px;
       text-decoration: none;
       font-weight: bold;
+      font-size: 14px;
+      padding: 4px 6px;
     }
     main {
       flex: 1;
+      padding: 20px;
+    }
+    section {
+      margin-bottom: 40px;
+    }
+    section h2 {
+      background: #222;
+      color: white;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 15px;
     }
     .productos {
       display: flex;
-      justify-content: center;
+      flex-wrap: wrap;
       gap: 20px;
-      padding: 20px;
     }
     .producto {
       background: #b3b3b3;
@@ -83,7 +100,6 @@
       font-weight: bold;
       text-decoration: none;
     }
-    /* 🔹 Carrito fijo abajo a la derecha */
     .carrito-total {
       position: fixed;
       bottom: 10px;
@@ -96,7 +112,6 @@
       box-shadow: 0 4px 8px rgba(0,0,0,0.3);
       cursor: pointer;
     }
-    /* 🔹 Panel del carrito */
     .carrito-panel {
       position: fixed;
       bottom: 60px;
@@ -110,9 +125,6 @@
       padding: 15px;
       display: none;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    }
-    .carrito-panel h3 {
-      margin-top: 0;
     }
     .carrito-item {
       display: flex;
@@ -130,19 +142,6 @@
       cursor: pointer;
       font-size: 12px;
     }
-    .carrito-panel button {
-      margin-top: 10px;
-      width: 100%;
-      background: #444;
-      color: white;
-      border: none;
-      padding: 8px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .carrito-panel button:hover {
-      background: #222;
-    }
   </style>
 </head>
 <body>
@@ -154,37 +153,110 @@
       <h2>PepesMarket</h2>
     </div>
     <nav>
-      <a href="#">Inicio</a>
-      <a href="#">Productos</a>
-      <a href="#contacto">Contacto</a>
+      <a href="#bebidas">Bebidas</a>
+      <a href="#licores">Licores</a>
+      <a href="#helados">Helados</a>
+      <a href="#golosinas">Golosinas</a>
+      <a href="#bimbo">Bimbo</a>
+      <a href="#cocina">Cocina</a>
+      <a href="#sopas">Sopas</a>
+      <a href="#limpieza">Limpieza</a>
+      <a href="#cuidado">Cuidado Personal</a>
+      <a href="#medicina">Medicina</a>
+      <a href="#bebes">Bebés</a>
+      <a href="#embutidos">Embutidos</a>
+      <a href="#mascotas">Mascotas</a>
     </nav>
   </header>
 
-  <!-- 🔹 PRODUCTOS -->
+  <!-- 🔹 CATEGORÍAS -->
   <main>
-    <section class="productos">
-      <div class="producto">
-        <img src="coca600.png" alt="Coca Cola 600ml">
-        <h3>Coca Cola 600ml</h3>
-        <p>Q8.00</p>
-        <button onclick="agregarAlCarrito('Coca Cola 600ml', 8)">Agregar al carrito</button>
+    <section id="bebidas">
+      <h2>🥤 Bebidas</h2>
+      <div class="productos">
+        <div class="producto">
+          <img src="coca600.png" alt="Coca Cola 600ml">
+          <h3>Coca Cola 600ml</h3>
+          <p>Q8.00</p>
+          <button onclick="agregarAlCarrito('Coca Cola 600ml', 8)">Agregar al carrito</button>
+        </div>
+        <div class="producto">
+          <img src="gallobotella.png" alt="Cerveza Gallo Botella">
+          <h3>Cerveza Gallo Botella</h3>
+          <p>Q10.00</p>
+          <button onclick="agregarAlCarrito('Cerveza Gallo Botella', 10)">Agregar al carrito</button>
+        </div>
+        <div class="producto">
+          <img src="gallo12onz.png" alt="Cerveza Gallo Lata 12oz">
+          <h3>Cerveza Gallo Lata 12oz</h3>
+          <p>Q10.00</p>
+          <button onclick="agregarAlCarrito('Cerveza Gallo Lata 12oz', 10)">Agregar al carrito</button>
+        </div>
       </div>
-      <div class="producto">
-        <img src="gallobotella.png" alt="Cerveza Gallo Botella">
-        <h3>Cerveza Gallo Botella</h3>
-        <p>Q10.00</p>
-        <button onclick="agregarAlCarrito('Cerveza Gallo Botella', 10)">Agregar al carrito</button>
-      </div>
-      <div class="producto">
-        <img src="gallo12onz.png" alt="Cerveza Gallo Lata 12oz">
-        <h3>Cerveza Gallo Lata 12oz</h3>
-        <p>Q10.00</p>
-        <button onclick="agregarAlCarrito('Cerveza Gallo Lata 12oz', 10)">Agregar al carrito</button>
-      </div>
+    </section>
+
+    <section id="licores">
+      <h2>🍷 Licores</h2>
+      <div class="productos"></div>
+    </section>
+
+    <section id="helados">
+      <h2>🍨 Helados</h2>
+      <div class="productos"></div>
+    </section>
+
+    <section id="golosinas">
+      <h2>🍬 Golosinas</h2>
+      <div class="productos"></div>
+    </section>
+
+    <section id="bimbo">
+      <h2>🍞 Bimbo</h2>
+      <div class="productos"></div>
+    </section>
+
+    <section id="cocina">
+      <h2>🍳 Cocina</h2>
+      <div class="productos"></div>
+    </section>
+
+    <section id="sopas">
+      <h2>🍲 Sopas</h2>
+      <div class="productos"></div>
+    </section>
+
+    <section id="limpieza">
+      <h2>🧽 Limpieza</h2>
+      <div class="productos"></div>
+    </section>
+
+    <section id="cuidado">
+      <h2>🧴 Cuidado Personal</h2>
+      <div class="productos"></div>
+    </section>
+
+    <section id="medicina">
+      <h2>💊 Medicina</h2>
+      <div class="productos"></div>
+    </section>
+
+    <section id="bebes">
+      <h2>🍼 Bebés</h2>
+      <div class="productos"></div>
+    </section>
+
+    <section id="embutidos">
+      <h2>🥓 Embutidos</h2>
+      <div class="productos"></div>
+    </section>
+
+    <section id="mascotas">
+      <h2>🐾 Mascotas</h2>
+      <div class="productos"></div>
     </section>
   </main>
 
-  <!-- 🔹 FOOTER CON DIRECCIÓN Y CONTACTO -->
+  <!-- 🔹 FOOTER -->
   <footer id="contacto">
     <p><strong>📍 Dirección:</strong> Aldea Pachalum, Rabinal, Baja Verapaz</p>
     <p><strong>📞 Contacto:</strong> 
@@ -194,12 +266,11 @@
     <p>© 2025 PepesMarket</p>
   </footer>
 
-  <!-- 🔹 BOTÓN TOTAL -->
+  <!-- 🔹 CARRITO -->
   <div class="carrito-total" onclick="toggleCarrito()">
     🛒 Total: <span id="total">Q0.00</span>
   </div>
 
-  <!-- 🔹 PANEL DETALLADO DEL CARRITO -->
   <div id="carritoPanel" class="carrito-panel">
     <h3>🛍️ Productos en carrito</h3>
     <div id="itemsCarrito"></div>
