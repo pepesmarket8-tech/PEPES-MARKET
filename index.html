@@ -11,6 +11,8 @@
       padding: 0;
       background: linear-gradient(to bottom right, orange, green);
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
     header {
       background: rgba(34, 34, 34, 0.9);
@@ -28,6 +30,9 @@
       margin: 0 10px;
       text-decoration: none;
       font-weight: bold;
+    }
+    main {
+      flex: 1;
     }
     .productos {
       display: flex;
@@ -71,18 +76,30 @@
       color: white;
       padding: 20px;
       text-align: center;
-      margin-top: 30px;
+      margin-top: auto;
     }
     footer a {
       color: #25d366;
       font-weight: bold;
       text-decoration: none;
     }
+    /* 🔹 Carrito fijo abajo a la derecha */
+    .carrito-total {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      background: #222;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 10px;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
   </style>
 </head>
 <body>
 
-  <!-- 🔹 HEADER CON LOGO -->
+  <!-- 🔹 HEADER -->
   <header>
     <div style="display: flex; align-items: center; gap: 10px;">
       <img src="logo.png" alt="Logo PepesMarket">
@@ -92,31 +109,29 @@
       <a href="#">Inicio</a>
       <a href="#">Productos</a>
       <a href="#contacto">Contacto</a>
-      <div class="carrito" onclick="toggleCarrito()">
-        🛒 <span id="contador">0</span>
-      </div>
     </nav>
   </header>
 
+  <!-- 🔹 PRODUCTOS -->
   <main>
     <section class="productos">
       <div class="producto">
         <img src="coca600.png" alt="Coca Cola 600ml">
         <h3>Coca Cola 600ml</h3>
         <p>Q8.00</p>
-        <button onclick="agregarAlCarrito('Coca Cola 600ml', 10)">Agregar al carrito</button>
+        <button onclick="agregarAlCarrito(8)">Agregar al carrito</button>
       </div>
       <div class="producto">
-        <img src="gallo12onz.png" alt="Cerveza Gallo Lata 350ml">
-        <h3>Gallo Lata 12onz</h3>
+        <img src="gallobotella.png" alt="Cerveza Gallo Botella">
+        <h3>Cerveza Gallo Botella</h3>
         <p>Q10.00</p>
-        <button onclick="agregarAlCarrito('Cerveza Gallo Lata 350ml', 12)">Agregar al carrito</button>
+        <button onclick="agregarAlCarrito(10)">Agregar al carrito</button>
       </div>
       <div class="producto">
-        <img src="gallobotella.png" alt="Cerveza Gallo Botella 350ml">
-        <h3>Gallo Botella</h3>
+        <img src="gallo12onz.png" alt="Cerveza Gallo Lata 12oz">
+        <h3>Cerveza Gallo Lata 12oz</h3>
         <p>Q10.00</p>
-        <button onclick="agregarAlCarrito('Cerveza Gallo Botella 350ml', 15)">Agregar al carrito</button>
+        <button onclick="agregarAlCarrito(10)">Agregar al carrito</button>
       </div>
     </section>
   </main>
@@ -131,38 +146,17 @@
     <p>© 2025 PepesMarket</p>
   </footer>
 
-  <!-- 🔹 CARRITO -->
-  <aside id="carritoContenido" class="carrito-contenido">
-    <h2>Carrito</h2>
-    <div id="itemsCarrito"></div>
-    <h3>Total: <span id="total">Q0.00</span></h3>
-  </aside>
+  <!-- 🔹 CARRITO SOLO TOTAL -->
+  <div class="carrito-total">
+    🛒 Total: <span id="total">Q0.00</span>
+  </div>
 
   <script>
-    let carrito = [];
     let total = 0;
 
-    function agregarAlCarrito(nombre, precio) {
-      carrito.push({ nombre, precio });
+    function agregarAlCarrito(precio) {
       total += precio;
-      document.getElementById("contador").textContent = carrito.length;
-      renderCarrito();
-    }
-
-    function renderCarrito() {
-      const itemsCarrito = document.getElementById("itemsCarrito");
-      itemsCarrito.innerHTML = "";
-      carrito.forEach(item => {
-        const div = document.createElement("div");
-        div.textContent = `${item.nombre} - Q${item.precio.toFixed(2)}`;
-        itemsCarrito.appendChild(div);
-      });
       document.getElementById("total").textContent = "Q" + total.toFixed(2);
-    }
-
-    function toggleCarrito() {
-      const carritoContenido = document.getElementById("carritoContenido");
-      carritoContenido.style.display = carritoContenido.style.display === "block" ? "none" : "block";
     }
   </script>
 
