@@ -2,325 +2,142 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>PepesMarket</title>
+  <link rel="icon" type="image/png" href="favicon.png">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(to bottom right, orange, green);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    header {
-      background: rgba(34, 34, 34, 0.9);
-      color: white;
-      padding: 10px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-    }
-    header img {
-      height: 50px;
-    }
-    header nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    header nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 14px;
-      padding: 4px 6px;
-    }
-    main {
-      flex: 1;
-      padding: 20px;
-    }
-    section {
-      margin-bottom: 40px;
-    }
-    section h2 {
-      background: #222;
-      color: white;
-      padding: 10px;
-      border-radius: 8px;
-      margin-bottom: 15px;
-    }
-    .productos {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-    .producto {
-      background: #b3b3b3;
-      border: 1px solid #888;
-      border-radius: 10px;
-      padding: 15px;
-      text-align: center;
-      width: 200px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-    .producto img {
-      max-width: 100%;
-      border-radius: 8px;
-    }
-    .producto p {
-      font-weight: bold;
-      color: #222;
-    }
-    .producto button {
-      background: orange;
-      border: none;
-      padding: 8px 12px;
-      margin-top: 5px;
-      cursor: pointer;
-      border-radius: 5px;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-    .producto button:hover {
-      background: green;
-      color: white;
-    }
-    footer {
-      background: #222;
-      color: white;
-      padding: 20px;
-      text-align: center;
-      margin-top: auto;
-    }
-    footer a {
-      color: #25d366;
-      font-weight: bold;
-      text-decoration: none;
-    }
-    .carrito-total {
-      position: fixed;
-      bottom: 10px;
-      right: 10px;
-      background: #222;
-      color: white;
-      padding: 10px 15px;
-      border-radius: 10px;
-      font-weight: bold;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      cursor: pointer;
-    }
-    .carrito-panel {
-      position: fixed;
-      bottom: 60px;
-      right: 10px;
-      width: 300px;
-      max-height: 400px;
-      overflow-y: auto;
-      background: #f4f4f4;
-      border: 1px solid #aaa;
-      border-radius: 10px;
-      padding: 15px;
-      display: none;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    }
-    .carrito-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-      font-size: 14px;
-    }
-    .carrito-item button {
-      background: red;
-      color: white;
-      border: none;
-      padding: 2px 6px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 12px;
-    }
+    :root{--orange:#ff8a00;--green:#2fb95d;--dark:#222;--gray:#444;}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(135deg,var(--orange),var(--green));min-height:100vh;display:flex;flex-direction:column;}
+    header{background:#222;color:#fff;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;}
+    .brand{display:flex;align-items:center;gap:12px;}
+    .brand img{height:46px;width:46px;border-radius:8px;object-fit:cover}
+    .title{font-size:20px;margin:0;font-weight:700}
+    nav a{color:#fff;text-decoration:none;font-weight:700;margin-left:12px}
+    .searchbox{width:400px;position:relative}
+    .searchbox input{width:100%;padding:8px 14px 8px 32px;border-radius:20px;border:none;font-size:14px}
+    .searchbox .lupa{position:absolute;left:10px;top:6px}
+    .suggestions{position:absolute;top:36px;left:0;width:100%;background:#fff;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.3);display:none;z-index:10}
+    .suggestions div{padding:8px;cursor:pointer}
+    .suggestions div:hover{background:#eee}
+    .banner{height:150px;background:linear-gradient(90deg,var(--orange),var(--green));box-shadow:0 4px 8px rgba(0,0,0,0.2);display:flex;align-items:center;padding:20px;color:#fff;}
+    .productos{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;margin:20px;}
+    .producto{width:220px;background:var(--gray);border-radius:12px;padding:12px;text-align:center;color:#fff;box-shadow:0 4px 10px rgba(0,0,0,0.3)}
+    .producto img{width:100%;height:140px;object-fit:cover;border-radius:8px}
+    .producto h3{margin:10px 0 4px}
+    .producto p{margin:0 0 8px}
+    .producto button{background:var(--orange);border:none;padding:6px 12px;border-radius:8px;color:#fff;cursor:pointer;font-weight:700}
+    footer{background:var(--dark);color:#fff;padding:18px;text-align:center}
+    .carrito-total{position:fixed;right:14px;bottom:14px;background:var(--dark);color:#fff;padding:10px 14px;border-radius:10px;cursor:pointer;z-index:60}
+    .carrito-panel{position:fixed;right:14px;bottom:64px;width:320px;max-height:400px;overflow:auto;background:#fff;border-radius:10px;padding:12px;box-shadow:0 8px 20px rgba(0,0,0,0.4);display:none;z-index:60}
+    .carrito-item{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #eee}
+    .carrito-item button{background:#d9534f;border:none;color:#fff;padding:4px 6px;border-radius:6px;cursor:pointer}
   </style>
 </head>
 <body>
 
-  <!-- 🔹 HEADER -->
-  <header>
-    <div style="display: flex; align-items: center; gap: 10px;">
-      <img src="logo.png" alt="Logo PepesMarket">
-      <h2>PepesMarket</h2>
+<header>
+  <div class="brand">
+    <img src="favicon.png" alt="logo">
+    <div>
+      <div class="title">PepesMarket</div>
+      <small>Tu tienda en Pachalum</small>
     </div>
-    <nav>
-      <a href="#bebidas">Bebidas</a>
-      <a href="#licores">Licores</a>
-      <a href="#helados">Helados</a>
-      <a href="#golosinas">Golosinas</a>
-      <a href="#bimbo">Bimbo</a>
-      <a href="#cocina">Cocina</a>
-      <a href="#sopas">Sopas</a>
-      <a href="#limpieza">Limpieza</a>
-      <a href="#cuidado">Cuidado Personal</a>
-      <a href="#medicina">Medicina</a>
-      <a href="#bebes">Bebés</a>
-      <a href="#embutidos">Embutidos</a>
-      <a href="#mascotas">Mascotas</a>
-    </nav>
-  </header>
-
-  <!-- 🔹 CATEGORÍAS -->
-  <main>
-    <section id="bebidas">
-      <h2>🥤 Bebidas</h2>
-      <div class="productos">
-        <div class="producto">
-          <img src="coca600.png" alt="Coca Cola 600ml">
-          <h3>Coca Cola 600ml</h3>
-          <p>Q8.00</p>
-          <button onclick="agregarAlCarrito('Coca Cola 600ml', 8)">Agregar al carrito</button>
-        </div>
-        <div class="producto">
-          <img src="gallobotella.png" alt="Cerveza Gallo Botella">
-          <h3>Cerveza Gallo Botella</h3>
-          <p>Q10.00</p>
-          <button onclick="agregarAlCarrito('Cerveza Gallo Botella', 10)">Agregar al carrito</button>
-        </div>
-        <div class="producto">
-          <img src="gallo12onz.png" alt="Cerveza Gallo Lata 12oz">
-          <h3>Cerveza Gallo Lata 12oz</h3>
-          <p>Q10.00</p>
-          <button onclick="agregarAlCarrito('Cerveza Gallo Lata 12oz', 10)">Agregar al carrito</button>
-        </div>
-      </div>
-    </section>
-
-    <section id="licores">
-      <h2>🍷 Licores</h2>
-      <div class="productos"></div>
-    </section>
-
-    <section id="helados">
-      <h2>🍨 Helados</h2>
-      <div class="productos"></div>
-    </section>
-
-    <section id="golosinas">
-      <h2>🍬 Golosinas</h2>
-      <div class="productos"></div>
-    </section>
-
-    <section id="bimbo">
-      <h2>🍞 Bimbo</h2>
-      <div class="productos"></div>
-    </section>
-
-    <section id="cocina">
-      <h2>🍳 Cocina</h2>
-      <div class="productos"></div>
-    </section>
-
-    <section id="sopas">
-      <h2>🍲 Sopas</h2>
-      <div class="productos"></div>
-    </section>
-
-    <section id="limpieza">
-      <h2>🧽 Limpieza</h2>
-      <div class="productos"></div>
-    </section>
-
-    <section id="cuidado">
-      <h2>🧴 Cuidado Personal</h2>
-      <div class="productos"></div>
-    </section>
-
-    <section id="medicina">
-      <h2>💊 Medicina</h2>
-      <div class="productos"></div>
-    </section>
-
-    <section id="bebes">
-      <h2>🍼 Bebés</h2>
-      <div class="productos"></div>
-    </section>
-
-    <section id="embutidos">
-      <h2>🥓 Embutidos</h2>
-      <div class="productos"></div>
-    </section>
-
-    <section id="mascotas">
-      <h2>🐾 Mascotas</h2>
-      <div class="productos"></div>
-    </section>
-  </main>
-
-  <!-- 🔹 FOOTER -->
-  <footer id="contacto">
-    <p><strong>📍 Dirección:</strong> Aldea Pachalum, Rabinal, Baja Verapaz</p>
-    <p><strong>📞 Contacto:</strong> 
-      <a href="tel:+50246767886">+502 4676-7886</a> | 
-      <a href="https://wa.me/50246767886" target="_blank">WhatsApp</a>
-    </p>
-    <p>© 2025 PepesMarket</p>
-  </footer>
-
-  <!-- 🔹 CARRITO -->
-  <div class="carrito-total" onclick="toggleCarrito()">
-    🛒 Total: <span id="total">Q0.00</span>
   </div>
-
-  <div id="carritoPanel" class="carrito-panel">
-    <h3>🛍️ Productos en carrito</h3>
-    <div id="itemsCarrito"></div>
-    <p><strong>Total: <span id="totalPanel">Q0.00</span></strong></p>
-    <button onclick="vaciarCarrito()">Vaciar carrito</button>
+  <div class="searchbox">
+    <span class="lupa">🔍</span>
+    <input id="search" placeholder="Buscar producto...">
+    <div id="suggest" class="suggestions"></div>
   </div>
+  <nav>
+    <a href="index.html">Inicio</a>
+    <a href="bebidas.html">Productos ▼</a>
+  </nav>
+</header>
 
-  <script>
-    let carrito = [];
-    let total = 0;
+<div class="banner">
+  <h1>Bienvenido a PepesMarket 🛒</h1>
+</div>
 
-    function agregarAlCarrito(nombre, precio) {
-      carrito.push({ nombre, precio });
-      total += precio;
-      actualizarCarrito();
-    }
+<main>
+  <section class="productos">
+    <div class="producto">
+      <img src="https://i.imgur.com/gb5mY0Q.jpg" alt="Coca Cola 600ml">
+      <h3>Coca Cola 600ml</h3>
+      <p>Q8.00</p>
+      <button onclick="agregarAlCarrito('Coca Cola 600ml',8)">Agregar</button>
+    </div>
+    <div class="producto">
+      <img src="https://i.imgur.com/nXjz8WZ.jpg" alt="Cerveza Gallo Botella">
+      <h3>Cerveza Gallo Botella</h3>
+      <p>Q10.00</p>
+      <button onclick="agregarAlCarrito('Cerveza Gallo Botella',10)">Agregar</button>
+    </div>
+    <div class="producto">
+      <img src="https://i.imgur.com/fT1eONd.jpg" alt="Cerveza Gallo Lata 12oz">
+      <h3>Cerveza Gallo Lata 12oz</h3>
+      <p>Q10.00</p>
+      <button onclick="agregarAlCarrito('Cerveza Gallo Lata 12oz',10)">Agregar</button>
+    </div>
+  </section>
+</main>
 
-    function eliminarItem(index) {
-      total -= carrito[index].precio;
-      carrito.splice(index, 1);
-      actualizarCarrito();
-    }
+<footer>
+  <p><strong>📍 Dirección:</strong> Aldea Pachalum, Rabinal, Baja Verapaz</p>
+  <p><strong>📞 Contacto:</strong> <a href="tel:+50246767886" style="color:#25d366">+502 4676-7886</a> | <a href="https://wa.me/50246767886" style="color:#25d366">WhatsApp</a></p>
+  <p>© 2025 PepesMarket</p>
+</footer>
 
-    function vaciarCarrito() {
-      carrito = [];
-      total = 0;
-      actualizarCarrito();
-    }
+<div class="carrito-total" onclick="toggleCarrito()">🛒 Total: <span id="total">Q0.00</span></div>
+<div id="carritoPanel" class="carrito-panel">
+  <h3>🛍️ Carrito</h3>
+  <div id="itemsCarrito"></div>
+  <p><strong>Total: <span id="totalPanel">Q0.00</span></strong></p>
+  <button onclick="vaciarCarrito()">Vaciar carrito</button>
+</div>
 
-    function actualizarCarrito() {
-      document.getElementById("total").textContent = "Q" + total.toFixed(2);
-      document.getElementById("totalPanel").textContent = "Q" + total.toFixed(2);
+<script>
+const PRODUCTS = [
+  {name:'Coca Cola 600ml', price:8, category:'bebidas.html', display:'Coca Cola 600ml — Q8.00'},
+  {name:'Cerveza Gallo Botella', price:10, category:'bebidas.html', display:'Cerveza Gallo Botella — Q10.00'},
+  {name:'Cerveza Gallo Lata 12oz', price:10, category:'bebidas.html', display:'Cerveza Gallo Lata 12oz — Q10.00'},
+  {name:'Pepsi 1L', price:12, category:'bebidas.html', display:'Pepsi 1L — Q12.00'}
+];
+const search=document.getElementById('search');
+const suggest=document.getElementById('suggest');
+search.addEventListener('input',()=>{
+  const q=search.value.trim().toLowerCase();
+  if(!q){suggest.style.display='none';suggest.innerHTML='';return;}
+  const matches=PRODUCTS.filter(p=>p.name.toLowerCase().includes(q));
+  suggest.innerHTML='';
+  matches.forEach(m=>{
+    const d=document.createElement('div');
+    d.textContent=m.display;
+    d.onclick=()=>{window.location.href=m.category;};
+    suggest.appendChild(d);
+  });
+  suggest.style.display='block';
+});
 
-      const itemsCarrito = document.getElementById("itemsCarrito");
-      itemsCarrito.innerHTML = "";
-
-      carrito.forEach((item, index) => {
-        const div = document.createElement("div");
-        div.classList.add("carrito-item");
-        div.innerHTML = `${item.nombre} - Q${item.precio.toFixed(2)} 
-                         <button onclick="eliminarItem(${index})">❌</button>`;
-        itemsCarrito.appendChild(div);
-      });
-    }
-
-    function toggleCarrito() {
-      const panel = document.getElementById("carritoPanel");
-      panel.style.display = panel.style.display === "block" ? "none" : "block";
-    }
-  </script>
-
+/* Carrito */
+let carrito=[];let total=0;
+function agregarAlCarrito(nombre,precio){carrito.push({nombre,precio});total+=precio;actualizar();}
+function eliminarItem(i){total-=carrito[i].precio;carrito.splice(i,1);actualizar();}
+function vaciarCarrito(){carrito=[];total=0;actualizar();}
+function actualizar(){
+  document.getElementById('total').textContent='Q'+total.toFixed(2);
+  document.getElementById('totalPanel').textContent='Q'+total.toFixed(2);
+  const cont=document.getElementById('itemsCarrito');cont.innerHTML='';
+  carrito.forEach((it,i)=>{
+    const d=document.createElement('div');
+    d.className='carrito-item';
+    d.innerHTML=`${it.nombre} - Q${it.precio.toFixed(2)} <button onclick="eliminarItem(${i})">❌</button>`;
+    cont.appendChild(d);
+  });
+}
+function toggleCarrito(){
+  const p=document.getElementById('carritoPanel');
+  p.style.display=(p.style.display==='block')?'none':'block';
+}
+</script>
 </body>
 </html>
